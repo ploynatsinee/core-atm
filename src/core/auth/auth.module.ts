@@ -2,22 +2,24 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthController } from './auth.controller';
 import { AuthServices } from './auth.services';
-import { Auth, AuthSchema } from './auth.schema';
+import { Profile, ProfileSchema } from '../profile/profile.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([
       {
-        name: `${Auth.name}`,
+        name: `${Profile.name}`,
         useFactory: () => {
-          return AuthSchema
+          return ProfileSchema
         }
       }
     ]),
 
   ],
   controllers: [AuthController],
-  providers: [AuthServices],
+  providers: [
+    AuthServices,
+  ],
   exports: [AuthServices]
 })
 export class AuthModule { }

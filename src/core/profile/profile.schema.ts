@@ -1,7 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+
 
 @Schema()
-export class Auth {
+export class Profile {
   @Prop({ required: true })
   first_name: string;
 
@@ -15,4 +16,4 @@ export class Auth {
   password: string;
 }
 
-export const AuthSchema = SchemaFactory.createForClass(Auth)
+export const ProfileSchema = SchemaFactory.createForClass(Profile)

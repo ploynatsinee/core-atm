@@ -1,25 +1,26 @@
 import { InjectModel } from "@nestjs/mongoose";
-import { Auth } from "./auth.schema";
 import { Injectable } from "@nestjs/common";
 import mongoose from "mongoose";
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { Profile } from "../profile/profile.schema";
+import { jwtConstants } from "../guards/guards.constants";
 
 @Injectable()
-export class AuthServices extends Auth {
+export class AuthServices extends Profile {
   constructor(
-    @InjectModel(Auth.name)
-    protected model: mongoose.Model<Auth>
+    @InjectModel(Profile.name)
+    protected model: mongoose.Model<Profile>
   ) {
     super()
   }
 
-  private async findOne(query: any): Promise<Auth> {
+  private async findOne(query: any): Promise<Profile> {
     return await this.model.findOne(query)
   }
 
   private async generateToken(user: any): Promise<string> {
-    const token = jwt.sign({ data: user.user_name }, 'secret', { expiresIn: '12h' });
+    const token = jwt.sign({ data: user.user_name }, jwtConstants.secret, { expiresIn: '12h' });
     return token;
   }
 
@@ -33,7 +34,7 @@ export class AuthServices extends Auth {
     return match;
   }
 
-  public async register(data: any): Promise<Auth> {
+  public async register(data: any): Promise<Profile> {
     if (!data || !data.first_name || !data.last_name || !data.user_name || !data.password) {
       throw new Error('Invalid request payload');
     }

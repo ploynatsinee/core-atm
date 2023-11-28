@@ -1,23 +1,38 @@
-import { Injectable } from "@nestjs/common";
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { verifyToken } from "src/utils/token";
-import { Auth } from "../auth/auth.schema";
+import { Profile } from "./profile.schema";
+import { map, Observable } from "rxjs";
 
 @Injectable()
-export class ProfileServices extends Auth {
+export class ExcludePasswordInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    return next.handle().pipe(
+      map((data: mongoose.Document<any>) => {
+        if (!data) return;
+        const { password, ...result } = data.toJSON();
+        return result;
+      }),
+    );
+  }
+}
+
+
+@Injectable()
+export class ProfileServices extends Profile {
   constructor(
-    @InjectModel(Auth.name)
-    protected model: mongoose.Model<Auth>
+    @InjectModel(Profile.name)
+    protected model: mongoose.Model<Profile>
   ) {
     super()
   }
 
-  private async findOne(query: any): Promise<Auth> {
+  private async findOne(query: any): Promise<Profile> {
     return await this.model.findOne(query).exec()
   }
 
-  public async getProfile(token: string): Promise<Auth> {
+  public async getProfile(token: string): Promise<Profile> {
     const formatToken = token.split(' ')[1];
 
     try {
