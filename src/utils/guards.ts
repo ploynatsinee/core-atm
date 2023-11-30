@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { jwtConstants } from 'src/core/guards/guards.constants';
+import { jwtConstants } from 'src/core/guards/auth_guards/auth_guards.constants';
 
 const validateRequest = (request) => {
   const { headers } = request;

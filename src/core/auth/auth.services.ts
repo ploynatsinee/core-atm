@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { Profile } from "../profile/profile.schema";
-import { jwtConstants } from "../guards/guards.constants";
+import { jwtConstants } from "../guards/auth_guards/auth_guards.constants";
 
 @Injectable()
 export class AuthServices extends Profile {
@@ -35,9 +35,6 @@ export class AuthServices extends Profile {
   }
 
   public async register(data: any): Promise<Profile> {
-    if (!data || !data.first_name || !data.last_name || !data.user_name || !data.password) {
-      throw new Error('Invalid request payload');
-    }
 
     const { user_name } = data
     const user = await this.findOne({ user_name }) || null

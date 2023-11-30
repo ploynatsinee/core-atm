@@ -4,7 +4,7 @@ import { ProfileController } from './profile.controller';
 import { ProfileServices } from './profile.services';
 import { Profile, ProfileSchema } from './profile.schema';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from '../guards/guards.constants';
+import { jwtConstants } from '../guards/auth_guards/auth_guards.constants';
 
 @Module({
   imports: [
