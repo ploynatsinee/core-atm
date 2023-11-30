@@ -1,7 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose from "mongoose";
-import { verifyToken } from "src/utils/token";
 import { Profile } from "./profile.schema";
 import { map, Observable } from "rxjs";
 
@@ -32,12 +31,9 @@ export class ProfileServices extends Profile {
     return await this.model.findOne(query).exec()
   }
 
-  public async getProfile(token: string): Promise<Profile> {
-    const formatToken = token.split(' ')[1];
-
+  public async getProfile(profile: any): Promise<Profile> {
     try {
-      const decoded = await verifyToken(formatToken);
-      const user = await this.findOne({ user_name: decoded.data })
+      const user = await this.findOne({ user_name: profile.data })
 
       if (!user) {
         throw new Error('User not found')
