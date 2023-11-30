@@ -19,13 +19,11 @@ export class ExcludePasswordInterceptor implements NestInterceptor {
 
 
 @Injectable()
-export class ProfileServices extends Profile {
+export class ProfileServices {
   constructor(
     @InjectModel(Profile.name)
     protected model: mongoose.Model<Profile>
-  ) {
-    super()
-  }
+  ) { }
 
   private async findOne(query: any): Promise<Profile> {
     return await this.model.findOne(query).exec()
@@ -33,7 +31,7 @@ export class ProfileServices extends Profile {
 
   public async getProfile(profile: any): Promise<Profile> {
     try {
-      const user = await this.findOne({ user_name: profile.data })
+      const user = await this.findOne({ user_name: profile.username, _id: profile.sub })
 
       if (!user) {
         throw new Error('User not found')

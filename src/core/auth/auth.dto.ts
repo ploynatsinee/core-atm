@@ -13,3 +13,11 @@ export class AuthRegisterDto {
   @IsNotEmpty()
   last_name: string;
 }
+
+export class AuthLoginDto {
+  @IsNotEmpty()
+  user_name: string;
+
+  @IsNotEmpty()
+  password: string;
+}
