@@ -1,6 +1,6 @@
 import { Controller, Get, UseInterceptors } from "@nestjs/common";
 import { ExcludePasswordInterceptor, ProfileServices } from "./profile.services";
-import { Profile } from "./profile.decorator";
+import { User } from "./profile.decorator";
 
 
 @Controller('profile')
@@ -9,7 +9,7 @@ export class ProfileController {
 
   @Get('me')
   @UseInterceptors(ExcludePasswordInterceptor)
-  async getProfile(@Profile() user: any) {
+  async getProfile(@User() user: any) {
     return await this.service.getProfile(user)
   }
 

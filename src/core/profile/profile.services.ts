@@ -1,6 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import mongoose from "mongoose";
+import * as mongoose from "mongoose";
 import { Profile } from "./profile.schema";
 import { map, Observable } from "rxjs";
 

@@ -1,7 +1,6 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import mongoose from "mongoose";
-import * as jwt from 'jsonwebtoken';
+import * as mongoose from "mongoose";
 import * as bcrypt from 'bcrypt';
 import { Profile } from "../profile/profile.schema";
 import { JwtService } from '@nestjs/jwt';
